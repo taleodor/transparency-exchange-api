@@ -228,14 +228,14 @@ Examples:
 The discovery endpoint is a part of the TEA OpenAPI specification. 
 
 If the TEI is known to the TEA server, the discovery endpoint must return at least 
-the productRelease uuid, the root URL of the TEA server, the list of supported
+the product release uuid, the root URL of the TEA server, the list of supported
 versions, plus the response may have other fields based on the current version of 
 the TEA OpenAPI specification.
 
 If the TEI is not known to the TEA server, the discovery endpoint must return a 404 
 status code with a response describing the error.
 
-TODO: Handle Authentication erorrs (401, 403) and corresponding messages.
+TODO: Handle Auth errors (401, 403) and corresponding messages.
 
 ## Notes Regarding .well-known
 Servers MUST NOT locate the actual TEA service endpoint at the

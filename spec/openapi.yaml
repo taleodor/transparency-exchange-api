@@ -422,9 +422,7 @@ paths:
         '400':
           $ref: "#/components/responses/400-invalid-request"
         '404':
-          description: The TEI is not known to the TEA server
-          content:
-            application/json: {}
+          $ref: "#/components/responses/404-object-by-id-not-found"
       tags:
         - TEA Discovery
 components:
@@ -1023,6 +1021,12 @@ components:
         - BLAKE2b-384
         - BLAKE2b-512
         - BLAKE3
+    unknown-error-type:
+      type: string
+      description: Classification of TEA error response
+      enum:
+        - OBJECT_UNKNOWN
+        - OBJECT_NOT_SHAREABLE
     #
     # Types used in API responses
     #
@@ -1089,13 +1093,15 @@ components:
     404-object-by-id-not-found:
       description: Object requested by identifier not found
       content:
-        application/json: {}
-    paginated-product:
-      description: A paginated response containing TEA Products
-      content:
         application/json:
           schema:
-            $ref: "#/components/schemas/paginated-product-response"
+            type: object
+            additionalProperties: false
+            properties:
+              error:
+                $ref: "#/components/schemas/unknown-error-type"
+            required:
+              - error
     paginated-product-release:
       description: A paginated response containing TEA Product Releases
       content:
@@ -1177,6 +1183,7 @@ tags:
   - name: TEA Component
   - name: TEA Component Release
   - name: TEA Artifact
+  - name: TEA Discovery
 externalDocs:
   description: Transparency Exchange API specification
   url: https://github.com/CycloneDX/transparency-exchange-api
