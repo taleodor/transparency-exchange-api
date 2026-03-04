@@ -10,7 +10,7 @@ info:
     email: tbc@somewhere.tld
     url: https://github.com/CycloneDX/transparency-exchange-api
   license:
-    name: Apache 2.0
+    name: Apache-2.0
     url: https://github.com/CycloneDX/transparency-exchange-api/blob/main/LICENSE
   version: 0.4.0-beta.3
 servers:
@@ -1428,15 +1428,40 @@ components:
             $ref: "#/components/schemas/paginated-product-release-response"
   parameters:
     # Pagination
-    page-offset:
-      name: pageOffset
-      description: Pagination offset
+    sort-field-product-release:
+      name: sortField
+      description: Sorting Field (must have default per object)
       in: query
       required: false
       schema:
-        type: integer
-        format: int64
-        default: 0
+        type: string
+        default: createdDate
+  # product release = createdDate
+  # component release = createdDate
+  # cle = id (as per cle spec)
+  # product = name (+ name must be made unique within a TEA server)
+  # collection = version
+
+  # in the response need to add -> 1. sortToken, 2. nextPage (present / notPresent)
+
+    sort-order:
+      name: sortOrder
+      description: Sorting Field (must have default per object)
+      in: query
+      required: false
+      schema:
+        type: enum
+        enum:
+          - ASC
+          - DESC
+        default: DESC
+    sort-token:
+      name: sortToken
+      description: Opaque token which has meaning to the server as a pointer to a sorting object (token after)
+      in: query
+      required: false
+      schema:
+        type: string
     page-size:
       name: pageSize
       description: Pagination offset
